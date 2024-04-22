@@ -1,7 +1,6 @@
 create database car_system;
 use car_system;
-create database Car_Rental;
-use car_Rental;
+
 CREATE TABLE Vehicle (
     vehicleID INT PRIMARY KEY,
     make VARCHAR(20),
@@ -79,6 +78,8 @@ VALUES
     (9, 3, 3, '2023-09-07', '2023-09-10', 'Daily'),
     (10, 10, 10, '2023-10-10', '2023-10-31', 'Monthly');
 
+select* from lease;
+
 INSERT INTO Payment (paymentID, leaseID, paymentDate, amount)
 VALUES
     (1, 1, '2023-01-03', 200.00),
@@ -114,7 +115,7 @@ WHERE email = 'david@example.com';
 
 -- 5. Get active leases for a specific customer.
 SELECT * FROM Lease
-WHERE customerID = 2 AND endDate >= CURRENT_DATE;
+WHERE customerID = 7 AND endDate >= CURRENT_DATE;
 
 -- 6. Find all payments made by a customer with a specific phone number.
 SELECT Payment.*
@@ -155,7 +156,7 @@ WHERE YEAR(transactionDate) = 2023;
 SELECT *
 FROM Customer
 WHERE customerID NOT IN (
-    SELECT DISTINCT customerID
+    SELECT customerID
     FROM Lease
     JOIN Payment ON Lease.leaseID = Payment.leaseID
 );
@@ -196,7 +197,6 @@ ORDER BY totalSpent DESC
 LIMIT 1;
 
 -- 18. List All Cars with Their Current Lease Information.
-SELECT Vehicle.*, Lease.*
-FROM Vehicle
-LEFT JOIN Lease ON Vehicle.vehicleID = Lease.vehicleID
-AND Lease.endDate >= CURRENT_DATE;
+select l.*,v.* from vehicle v 
+join lease l on l.vehicleID=v.vehicleID 
+and l.endDate>=current_date;
